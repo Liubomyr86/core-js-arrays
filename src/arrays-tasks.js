@@ -20,8 +20,28 @@
  *    getIntervalArray(0, 100) => [ 0, 1, 2, ..., 100 ]
  *    getIntervalArray(3, 3) => [ 3 ]
  */
-function getIntervalArray(/* start, end */) {
-  throw new Error('Not implemented');
+function getIntervalArray(start, end) {
+  const range = {
+    from: start,
+    to: end,
+
+    [Symbol.iterator]() {
+      this.current = this.from - 1;
+      return this;
+    },
+
+    next() {
+      if (this.current < this.to) {
+        this.current += 1;
+        return { done: false, value: this.current };
+      }
+      return { done: true };
+    },
+  };
+
+  const arr = Array.from(range);
+
+  return arr;
 }
 
 /**
